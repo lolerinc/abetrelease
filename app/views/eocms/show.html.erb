@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Evaluation:</strong>
+  <%= @eocm.evaluation %>
+</p>
+
+<p>
+  <strong>Comment outcomes:</strong>
+  <%= @eocm.comment_outcomes %>
+</p>
+
+<p>
+  <strong>Comment worked:</strong>
+  <%= @eocm.comment_worked %>
+</p>
+
+<p>
+  <strong>Comment changes:</strong>
+  <%= @eocm.comment_changes %>
+</p>
+
+<p>
+  <strong>Comment rec:</strong>
+  <%= @eocm.comment_rec %>
+</p>
+
+<p>
+  <strong>Comment implemented:</strong>
+  <%= @eocm.comment_implemented %>
+</p>
+
+<p>
+  <strong>Comment results:</strong>
+  <%= @eocm.comment_results %>
+</p>
+
+<p>
+  <strong>Comment additional:</strong>
+  <%= @eocm.comment_additional %>
+</p>
+
+<p>
+  <strong>Comment failed:</strong>
+  <%= @eocm.comment_failed %>
+</p>
+
+<%= link_to 'Home', '/browse/index' %> | 
+<%= link_to 'Edit', edit_eocm_path(@eocm) %>
+<%# link_to 'Back', :back %>

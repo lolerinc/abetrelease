@@ -1,0 +1,701 @@
+<center><h1>
+  <span class="label label-danger">System Configuration</span>
+</h1> </center>
+
+<!--  This section is for navigating to the table individually -->
+<!--  Likely useful, but would require re-typing what is already on this page. -->
+<!-- Simply ran out of time -->
+<!--
+<center>
+<%= link_to "<button type='button' class='btn btn-default'> Degrees</button>".html_safe , degrees_path %>
+<%= link_to "<button type='button' class='btn btn-default'> Tracks</button>".html_safe , tracks_path %>
+<%= link_to "<button type='button' class='btn btn-default'> Courses</button>".html_safe , courses_path %>
+<%= link_to "<button type='button' class='btn btn-default'> Offerings</button>".html_safe , offerings_view_path %>
+<%= link_to "<button type='button' class='btn btn-default'> Teachings</button>".html_safe , teachings_path %>
+<%= link_to "<button type='button' class='btn btn-default'> Users</button>".html_safe , users_path %>
+<%= link_to "<button type='button' class='btn btn-default'> ABET Outcomes</button>".html_safe , abet_outcomes_path %>
+<%= link_to "<button type='button' class='btn btn-default'> Approvers</button>".html_safe , approvers_path %>
+<%= link_to "<button type='button' class='btn btn-default'> Course Track List</button>".html_safe , course_track_lists_path %>
+<%= link_to "<button type='button' class='btn btn-default'> Library</button>".html_safe , libraries_path %>
+<%= link_to "<button type='button' class='btn btn-default'> Documents</button>".html_safe , documents_all_path %>
+</center>
+
+-->
+
+<!-- START Coordinator section -->
+<!-- A coordinator should be able to use -->
+<% if current_user.permission == "C" %>
+
+  <!-- Coordinator table : Document -->
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <h2><span class="label label-primary">Document</span></h2>
+  
+ <button type="button" class="btn btn-info" 
+          data-toggle="collapse" 
+          data-target="#documentAdd">Add Document</button>
+
+ <div id="documentAdd" class="collapse">
+
+  <%= form_for Document.new, class: 'form-inline'   do |f| %>
+  <%= f.label :name  %>
+  <%= f.text_field :name,  {class: "form-control", 
+                            style:  "width:350px"} %>
+  <%= f.label :status %>
+  <%= f.select :status, 
+                options_for_select(["Not Submitted",
+                "Not Reviewed", "Revisions Required", 
+                "Approved - Complete"]) %>
+  <div class="form-group" id="post_date_time">
+    <%= f.label :assigned  %>
+    <div class='input-group date' >
+    <%= f.text_field :assigned,  {class: "form-control datetimepicker",
+                                style:  "width:350px"} %>
+    </div>
+  </div>
+  <div class="form-group" id="post_date_time">
+    <%= f.label :due  %>
+    <div class='input-group date' >
+    <%= f.text_field :due,  {class: "form-control datetimepicker", 
+                            style:  "width:350px"} %>
+    </div>
+  </div>
+  <%= f.label "Form type:"  %>
+  <%= f.select :formType, 
+                options_for_select(["EOCM", "PIE", "AIR"]) %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>
+ </div> 
+  <!-- Table for documents -->
+  <table class="table"  >
+    <thead>
+      <tr>
+        <th><%= "Document ID" %></th>
+        <th><%= "Type: "%></th>
+        <th><%= "Status: "%></th>
+        <th><%= "Major: "%></th>
+        <th><%= "Course Number: "%></th>
+        <th><%= "Section: "%></th>
+        <th><%= "Course: "%></th>
+        <th><%= "Term: "%></th>
+        <th><%= "Assigned: "%></th>
+        <th><%= "Due: "%></th>
+        <th><%= "Assigned To: "%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @documents.each do |document| %>
+      <tr>
+        <td><%= document.id %></td>
+        <td><%= document.formType%></td>
+        <td><%= document.status%></td>
+        <td><%= document.offering.course.code_prefix%></td>
+        <td><%= document.offering.course.code_suffix%></td>
+        <td><%= document.offering.section%></td>
+        <td><%= document.offering.course.name%></td>
+        <td><%= document.offering.term%></td>
+        <td><%= document.assigned%></td>
+        <td><%= document.due%></td>
+        <td><%= document.offering.user.name%></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+        </span>  <%= link_to 'Edit', edit_document_path(document) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true">
+        </span>  <%= link_to 'Delete', document, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @documents, :param_name => 'documents_page' %>
+</div>
+
+
+
+  <!-- Coordinator table : End of couse memo -->
+
+<div class="panel panel-default">
+  <h2><span class="label label-primary">End of Course Memo</span></h2>
+ <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#eocmAdd">Add EOCM</button>
+
+ <div id="eocmAdd" class="collapse">
+  <%= form_for EOCM.new, class: 'form-inline'   do |f| %>
+  <%= f.label :document_id  %>
+  <%= f.text_field :document_id,  {class: "form-control" , style:  "width:350px"} %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>
+ </div> 
+  <table class="table"  >
+    <thead>
+      <tr>
+        <th><%= "Docment ID: "%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @eocms.each do |eocm| %>
+      <tr>
+          <td><%= eocm.document.id %></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+        </span>  <%= link_to 'Edit', edit_eocm_path(eocm) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true">
+        </span>  <%= link_to 'Delete', eocm, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @eocms, :param_name => 'eocms_page' %>
+</div>
+
+
+
+
+  <!-- Coordinator table : Performance indicator evaluation -->
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <h2><span class="label label-primary">Performance Indicator Evaluation</span></h2>
+  
+ <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#pieAdd">Add PIE</button>
+ <div id="pieAdd" class="collapse">
+  <%= form_for PIE.new, class: 'form-inline'   do |f| %>
+  <%= f.label :document_id  %>
+  <%= f.text_field :document_id,  {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :name %>
+  <%= f.text_field :name , {class: "form-control" , style:  "width:350px"} %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>
+ </div> 
+  <table class="table"  >
+    <thead>
+      <tr>
+        <th><%= "Document ID: "%></th>
+        <th><%= "Name: "%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @pies.each do |pie| %>
+      <tr>
+          <td><%= pie.document.id %></td>
+          <td><%= pie.name %></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  <%= link_to 'Edit', edit_pie_path(pie) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  <%= link_to 'Delete', pie, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @pies, :param_name => 'pies_page' %>
+</div>
+
+
+
+
+  <!-- Coordinator table : Action item response -->
+
+<div class="panel panel-default">
+  <h2><span class="label label-primary">Action Item Response</span></h2>
+  
+ <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#airAdd">Add AIR</button>
+
+ <div id="airAdd" class="collapse">
+
+  <%= form_for AIR.new, class: 'form-inline'   do |f| %>
+  <%= f.label :document_id  %>
+  <%= f.text_field :document_id,  {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :name %>
+  <%= f.text_field :name , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :assignee1 %>
+  <%= f.text_field :assignee1 , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :assignee2 %>
+  <%= f.text_field :assignee2 , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :assignee3 %>
+  <%= f.text_field :assignee3 , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :assignee4 %>
+  <%= f.text_field :assignee4 , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :meetingName %>
+  <%= f.text_field :meetingName , {class: "form-control" , style:  "width:350px"} %>
+  <div class="form-group" id="post_date_time">
+    <%= f.label :meetingDate  %>
+    <div class='input-group date' >
+    <%= f.text_field :meetingDate,  {class: "form-control datetimepicker",
+                                style:  "width:350px"} %>
+    </div>
+  </div>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>
+ </div> 
+  <table class="table"  >
+   
+    <thead>
+      <tr>
+        <th><%= "Document ID: "%></th>
+        <th><%= "Name: "%></th>
+        <th><%= "Assignee 1: "%></th>
+        <th><%= "Assignee 2: "%></th>
+        <th><%= "Assignee 3: "%></th>
+        <th><%= "Assignee 4: "%></th>
+        <th><%= "Meeting Name: "%></th>
+        <th><%= "Meeting Date: "%></th>
+      </tr>
+    </thead>
+    
+    <tbody>
+    <% @airs.each do |air| %>
+      <tr>
+        <td><%= air.document.id %></td>
+        <td><%= air.name %></td>
+        <td><%= air.assignee1 %></td>
+        <td><%= air.assignee2 %></td>
+        <td><%= air.assignee3 %></td>
+        <td><%= air.assignee4 %></td>
+        <td><%= air.meetingName %></td>
+        <td><%= air.meetingDate %></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  <%= link_to 'Edit', edit_air_path(air) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  <%= link_to 'Delete', air, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+  
+    </tbody>
+    
+  </table>
+  <%= will_paginate @airs, :param_name => 'airs_page' %>
+</div>
+
+
+
+
+  <!-- Coordinator table : Library -->
+
+<div class="panel panel-default">
+  <h2><span class="label label-primary">Library</span></h2>
+  
+ <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#libraryAdd">Add Library</button>
+
+ <div id="libraryAdd" class="collapse">
+  <%= form_for Library.new, class: 'form-inline'   do |f| %>
+  <%= f.label :offering_id  %>
+  <!-- <%= f.text_field :offering_id,  {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :offering_id, Offering.all.order('crn ASC'), :id, :CRN, :prompt => "Select CRN" %>
+  <%= f.label :document_id %>
+  <!-- <%= f.text_field :document_id , {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :document_id, Document.all.order('name ASC'), :id, :name, :prompt => "Select" %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>
+ </div> 
+  <table class="table"  >
+    <thead>
+      <tr>
+        <th><%= "Course: "%></th>
+        <th><%= "Section: "%></th>
+        <th><%= "Document: "%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @libraries.each do |library| %>
+      <tr>
+          <td><%= library.offering.course.name %></td>
+          <td><%= library.offering.section %></td>
+          <td><%= library.document.name %></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  <%= link_to 'Edit', edit_library_path(library) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  <%= link_to 'Delete', library, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+ 
+    </tbody>
+  </table>
+  <%= will_paginate @libraries, :param_name => 'libraries_page' %>
+</div>
+
+
+
+
+    <!-- Coordinator table : ABET outcomes -->
+
+<div class="panel panel-default">
+  <h2><span class="label label-primary">ABET Outcomes</span></h2>
+ <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#abetoutcomeAdd">Add ABET Outcome</button>
+
+ <div id="abetoutcomeAdd" class="collapse">
+  <%= form_for AbetOutcome.new, class: 'form-inline'   do |f| %>
+  <%= f.label :track_id  %>
+  <!-- <%= f.text_field :track_id,  {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :track_id, Track.all.order('name ASC'), :id, :name, :prompt => "Select" %>
+  <%= f.label :code %>
+  <!-- <%= f.text_field :code , {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.select :code, ('A'..'Q') %>
+  <%= f.label :desc %>
+  <%= f.text_field :desc , {class: "form-control" , style:  "width:350px"} %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>
+ </div> 
+  <table class="table"  >
+    <thead>
+      <tr>
+        <th><%= "Track: "%></th>
+        <th><%= "Code: "%></th>
+        <th><%= "Description: "%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @abet_outcomes.each do |outcome| %>
+      <tr>
+        <td><%= outcome.track.name %></td>
+        <td><%= outcome.code %></td>
+        <td><%= outcome.desc %></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  <%= link_to 'Edit', edit_abet_outcome_path(outcome) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  <%= link_to 'Delete', outcome, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @abet_outcomes, :param_name => 'abet_outcomes_page' %>
+</div>
+
+<% end %>
+<!-- END Coordinator section -->
+
+
+
+
+
+<!-- START Admin section -->
+<!-- An admin should be able to use -->
+<% if current_user.permission == "A" %>
+
+  <!-- Admin table : Users-->
+
+<div class="panel panel-default">
+  <h2><span class="label label-primary">Users</span></h2>
+  
+  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#userAdd">Add User</button>
+  <div id="userAdd" class="collapse">
+  <%= form_for  User.new, class: 'form-inline'  do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name , {class: "form-control" , style:  "width:350px"}  %>
+  <%= f.label :fname %>
+  <%= f.text_field :fname , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :lname %>
+  <%= f.text_field :lname , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :email %>
+  <%= f.text_field :email , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :permission %>
+  <!-- <%= f.text_field :permission , {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.select :permission, options_for_select([ ["I (instructor)", "I"], 
+                              ["C (coordinator)", "C"], ["A (admin)", "A"], 
+                              ["E (evaluator)", "C"] ]) %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>   
+  </div>
+  <!-- Table for degrees -->
+  <table class="table"  >
+    <thead>
+      <tr>
+        <th><%= "Name: "%></th>
+        <th><%= "First Name: "%></th>
+        <th><%= "Last Name: "%></th>
+        <th><%= "Email: "%></th>
+        <th><%= "Permission: "%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.fname %></td>
+        <td><%= user.lname %></td>
+        <td><%= user.email %></td>
+        <td><%= user.permission %></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  <%= link_to 'Edit', edit_user_path(user) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  <%= link_to 'Delete', user, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @users, :param_name => 'users_page' %>
+</div>
+
+
+
+  <!-- Admin table : Degrees -->
+
+<div class="panel panel-default">
+  <h2><span class="label label-primary">Degrees</span></h2>
+   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#degreeAdd">Add Degree</button>
+   <div id="degreeAdd" class="collapse">
+
+  <%= form_for Degree.new , class: 'form-inline' do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name , {class: "form-control" , style:  "width:350px"} %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %> 
+  <% end %>    
+  </div>
+  <table class="table"  >
+    <thead>
+      <tr>
+        <th><%= "Degree: "%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @degrees.each do |degree| %>
+      <tr>
+        <td><%= degree.name %></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  <%= link_to 'Edit', edit_degree_path(degree) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  <%= link_to 'Delete', degree, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @degrees, :param_name => 'degrees_page' %>
+</div>
+
+
+
+
+  <!-- Admin table : Courses -->
+
+<div class="panel panel-default">
+  <h2><span class="label label-primary">Courses</span></h2>
+   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#courseAdd">Add Course</button>
+   <div id="courseAdd" class="collapse">
+
+  <%= form_for Course.new , class: 'form-inline' do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name ,{class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :code_suffix %>
+  <%= f.text_field :code_suffix, {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :code_prefix %>
+  <%= f.text_field :code_prefix, {class: "form-control" , style:  "width:350px"} %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>   
+  </div>
+  <!-- Table for degrees -->
+  <table class="table"  >
+    <thead>
+      <tr>
+        <th><%= "Course: "%></th>
+        <th><%= "Suffix: "%></th>
+        <th><%= "Prefix: "%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @courses.each do |course| %>
+      <tr>
+        <td><%= course.name %></td>
+        <td><%= course.code_suffix %></td>
+        <td><%= course.code_prefix %></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  <%= link_to 'Edit', edit_course_path(course) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  <%= link_to 'Delete', course, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @courses, :param_name => 'courses_page' %>
+</div>
+
+
+
+  <!-- Admin table : Tracks -->
+
+<div class="panel panel-default">
+  <h2><span class="label label-primary">Tracks</span></h2>
+   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#trackAdd">Add Track</button>
+
+   <div id="trackAdd" class="collapse">
+  <%= form_for Track.new , class: 'form-inline' do |f| %>
+  <%= f.label :degree_id %>
+  <!-- <%= f.text_field :degree_id, {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :degree_id, Degree.all, :id, :name, :prompt => "Select" %>
+  <%= f.label :name %>
+  <%= f.text_field :name, {class: "form-control" , style:  "width:350px"} %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>  
+  </div>
+  <table class="table"  >
+    <thead>
+      <tr>
+        <th><%= "Degree: "%></th>
+        <th><%= "Track: "%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @tracks.each do |track| %>
+      <tr>
+        <td><%= track.degree.name %> </td>
+        <td><%= track.name %> </td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  <%= link_to 'Edit', edit_track_path(track) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  <%= link_to 'Delete', track, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+    </tbody>
+  </table>
+<%= will_paginate @tracks, :param_name => 'tracks_page' %>
+</div>
+
+
+
+  <!-- Admin table : Course track list -->
+
+<div class="panel panel-default">
+  <h2><span class="label label-primary">Course Track List</span></h2>
+ <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#courseTrackAdd">Add Course to Track</button>
+
+ <div id="courseTrackAdd" class="collapse">
+
+  <%= form_for CourseTrackList.new, class: 'form-inline'   do |f| %>
+  <%= f.label :track_id  %>
+  <!-- <%= f.text_field :track_id,  {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :track_id, Track.all.order('name ASC'), :id, :name, :prompt => "Select" %>
+  <%= f.label :course_id %>
+  <!-- <%= f.text_field :course_id , {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :course_id, Course.all.order('name ASC'), :id, :name, :prompt => "Select" %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>
+ </div> 
+  <table class="table"  >
+    <thead>
+      <tr>
+        <th><%= "Track: "%></th>
+        <th><%= "Course: "%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @course_track_lists.each do |ctl| %>
+      <tr>
+          <td><%= ctl.track.name %></td>
+          <td><%= ctl.course.name %></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  <%= link_to 'Edit', edit_course_track_list_path(ctl) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  <%= link_to 'Delete', ctl, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @course_track_lists, :param_name => 'course_track_lists_page' %>
+</div>
+
+
+
+  <!-- Admin table : Offerings -->
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <h2><span class="label label-primary">Offerings</span></h2>
+  
+   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#offeringAdd">Add Offering</button>
+
+  
+   <div id="offeringAdd" class="collapse">
+
+  <%= form_for Offering.new , class: 'form-inline' do |f| %>
+  <%= f.label :CRN %>
+  <%= f.text_field :CRN , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :section %>
+  <%= f.text_field :section , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :year %>
+  <%= f.text_field :year, {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :term %>
+  <!-- <%= f.text_field :term ,{class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.select :term, (1..12) %>
+  <%= f.label :evaluation %>
+  <!-- <%= f.text_field :evaluation , {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.select :evaluation, options_for_select(["Pass", "Fail", "Other", "--"]) %>
+  <%= f.label :course_id %>
+  <!-- <%= f.text_field :course_id, {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :course_id, Course.all.order('name ASC'), :id, :name, :prompt => "Select" %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>   
+  </div>
+  <!-- Table for degrees -->
+  <table class="table"  >
+   
+    <thead>
+      <tr>
+        <th><%= "CRN: "%></th>
+        <th><%= "Section: "%></th>
+        <th><%= "Year: "%></th>
+        <th><%= "Term: "%></th>
+        <th><%= "Evaluation: "%></th>
+        <th><%= "Course: "%></th>
+      </tr>
+    </thead>
+    
+    <tbody>
+    <% @offerings.each do |offering| %>
+      <tr>
+        <td><%= offering.CRN %></td>
+        <td><%= offering.section %></td>
+        <td><%= offering.year %></td>
+        <td><%= offering.term %></td>
+        <td><%= offering.evaluation %></td>
+        <td><%= offering.course.name %></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  <%= link_to 'Edit', edit_offering_path(offering) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  <%= link_to 'Delete', offering, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+  
+    </tbody>
+    
+  </table>
+  <%= will_paginate @offerings, :param_name => 'offerings_page' %>
+</div>
+
+
+
+  <!-- Admin table : Teachings -->
+
+<div class="panel panel-default">
+  <h2><span class="label label-primary">Teachings</span></h2>
+ <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#teachingAdd">Add Teaching</button>
+
+ <div id="teachingAdd" class="collapse">
+  <%= form_for Teaching.new, class: 'form-inline'   do |f| %>
+  <%= f.label :user_id  %>
+  <!-- <%= f.text_field :user_id ,  {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :user_id, User.all, :id, :name, :prompt => "Select" %>
+  <%= f.label :offering_id %>
+  <%= f.collection_select :offering_id, Offering.all.order('CRN ASC'), :id, :CRN, :prompt => "Select CRN" %> 
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>
+ </div> 
+  <table class="table"  >
+    <thead>
+      <tr>
+        <th><%= "Instructor: "%></th>
+        <th><%= "Course Name: "%></th>
+        <th><%= "Section: "%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @teachings.each do |teaching| %>
+      <tr>
+        <td><%= teaching.user.fname %><%= " " %><%= teaching.user.lname %></td>
+        <td><%= teaching.offering.course.name %></td> 
+        <td><%= teaching.offering.section %></td>
+        <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  <%= link_to 'Edit', edit_teaching_path(teaching) %></td>
+        <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  <%= link_to 'Delete', teaching, :method => 'delete' %></td>
+      </tr>
+   <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @teachings, :param_name => 'teachings_page' %>
+</div>
+
+<% end %>
+
+<script type="text/javascript">
+  $(function () {
+    $('.datetimepicker').datetimepicker({format: "YYYY-MM-DD hh:mm a ", useCurrent: false //Important! See issue #1075
+    });
+  });
+</script>
+<!-- END Admin section -->

@@ -1,0 +1,87 @@
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <h2><span class="label label-primary">Document Index</span></h2>
+  
+ <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#documentAdd">Add Document</button>
+
+ <div id="documentAdd" class="collapse">
+
+  <%= form_for Document.new, class: 'form-inline'   do |f| %>
+  <%= f.label :name  %>
+  <%= f.text_field :name,  {class: "form-control", 
+                            style:  "width:350px"} %>
+  <%= f.label :status %>
+  <%= f.select :status, 
+                options_for_select(["Not Submitted",
+                "Not Reviewed", "Revisions Required", 
+                "Approved - Complete"]) %>
+  <div class="form-group" id="post_date_time">
+    <%= f.label :assigned  %>
+    <div class='input-group date' >
+    <%= f.text_field :assigned,  {class: "form-control datetimepicker",
+                                style:  "width:350px"} %>
+    </div>
+  </div>
+  <div class="form-group" id="post_date_time">
+    <%= f.label :due  %>
+    <div class='input-group date' >
+    <%= f.text_field :due,  {class: "form-control datetimepicker", 
+                            style:  "width:350px"} %>
+    </div>
+  </div>
+  <%= f.label "Form type:"  %>
+  <%= f.select :formType, 
+                options_for_select(["EOCM", "PIE", "AIR"]) %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>
+ </div> 
+  <!-- Table for degrees -->
+  <table class="table"  >
+   
+    <thead>
+      <tr>
+        <th><%= "Type: "%></th>
+        <th><%= "Status: "%></th>
+        <th><%= "Major: "%></th>
+        <th><%= "Course Number: "%></th>
+        <th><%= "Section: "%></th>
+        <th><%= "Course: "%></th>
+        <th><%= "Term: "%></th>
+        <th><%= "Assigned: "%></th>
+        <th><%= "Due: "%></th>
+        <th><%= "Assigned To: "%></th>
+      </tr>
+    </thead>
+    
+    <tbody>
+    <% @documents.each do |document| %>
+      <tr>
+        <td><%= document.formType%></td>
+        <td><%= document.status%></td>
+        <td><%= document.offering.course.code_prefix%></td>
+        <td><%= document.offering.course.code_suffix%></td>
+        <td><%= document.offering.section%></td>
+        <td><%= document.offering.course.name%></td>
+        <td><%= document.offering.term%></td>
+        <td><%= document.assigned%></td>
+        <td><%= document.due%></td>
+        <td><%= document.offering.user.name%></td>
+        <td> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  <%= link_to 'Details', document_path(document) %></td>
+      </tr>
+   <% end %>
+  
+    </tbody>
+    
+  </table>
+      
+      <%= link_to "<button type='button' class='btn btn-default'> Admin Page </button>".html_safe , sys_admin_index_path %>
+
+</div>
+
+<script type="text/javascript">
+  $(function () {
+    $('.datetimepicker').datetimepicker({defaultDate: "<%= @document.assigned %>", format: "YYYY-MM-DD hh:mm a "
+    });
+  });
+</script>

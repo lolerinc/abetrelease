@@ -1,0 +1,15 @@
+<% u = @user %>
+ <center>
+ <h2><span class="label label-primary">Showing User: <%= u.name %></span></h2>
+ <%= "User Name: "%><%= u.name %><br>
+<%= "First Name: "%><%= u.fname %><br>
+<%= "Last Name: "%><%= u.lname %><br>
+<%= "Email: "%><%= u.email %><br>
+<%= "Permission: "%><%= u.permission %><br>
+ 
+
+  <%= link_to "<button type='button' class='btn btn-default'> Admin Page </button>".html_safe , sys_admin_index_path %>
+  <%= link_to "<button type='button' class='btn btn-default'> Edit </button>".html_safe , edit_user_path(u)  %>
+ </center>
+
+

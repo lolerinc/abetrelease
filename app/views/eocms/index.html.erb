@@ -1,0 +1,185 @@
+<p id="notice"><%= notice %></p>
+
+<style>
+	h3 	{color: #337ab7;}
+	th 	{color: #337ab7;}
+	thead {color: #337ab7;}
+	b {color: #337ab7;}
+</style>
+
+<center><h2><span class="label label-primary">End of Course Memo</span></h2></center>
+
+			
+	<% if(params.has_key?(:doc_id)) %>
+  	<% eocm = @eocm.first %>
+  	<% doc = @doc.first %>
+
+		<thead><b><%= doc.offering.course.name %></b></thead>
+		<table class="table table-compact">
+		<tr>
+			<td><%= doc.offering.user.fname %></td>
+			<td><%= doc.offering.user.lname %></td>
+			<td><%= doc.offering.user.email %></td>
+		</tr>
+		<tr>
+			<td><%= doc.offering.CRN %></td>
+			<td><%= doc.offering.course.code_prefix %></td>
+			<td><%= doc.offering.course.code_suffix %></td>
+		</tr>
+		<tr>
+			<td><%= doc.offering.term %></td>
+			<td><%= doc.offering.year %></td>
+			<td><%= doc.offering.section %></td>
+		</tr>
+		</table>
+		
+		
+
+<div class="container">
+		<thead><b>Outcome rating rubric</b></thead>
+		<table class="table table-sm">
+		<tr>
+			<th>Excellent</th>
+			<td>Almost all students demonstrated mastery of outcome.</td>
+		</tr>
+		<tr>
+			<th>Good</th>
+			<td>Most students demonstrated mastery of outcome</td>
+		</tr>
+		<tr>
+			<th>Satisfactory</th>
+			<td>Most students demonstrated competence with outcome</td>
+		</tr>
+		<tr>
+			<th>Needs Improvement</th>
+			<td>Many students struggled with outcome concepts and application</td>
+		</tr>
+		<tr>
+			<th>Needs Major Improvement</th>
+			<td>Most students struggled with outcome concepts and application</td>
+		</tr>
+		</table>
+		<p>
+			<b>An improvement plan must be provided for any course outcome that rates lower than “Satisfactory”.</b>
+		</p>
+</div>
+      <h3>List course outcomes</h3>
+		<p>
+			<%= eocm.evaluation.to_s.gsub(/\n/, '<br/>').html_safe %>
+		</p>
+      <h3>Comments about course outcomes</h3>
+		<p>
+			<%= eocm.comment_outcomes.to_s.gsub(/\n/, '<br/>').html_safe%>
+		</p>
+      <h3>List the aspects of the course </h3>
+		<p>
+			<%= eocm.comment_worked.to_s.gsub(/\n/, '<br/>').html_safe%>
+		</p>
+      <h3>What changes should be made to the course?</h3>
+		<p>
+			<%= eocm.comment_rec.to_s.gsub(/\n/, '<br/>').html_safe %>
+		</p>
+      <h3>What changes were implemented?</h3>
+		<p>
+			<%= eocm.comment_implemented.to_s.gsub(/\n/, '<br/>').html_safe %>
+		</p>
+      <h3>What were the results of the changes?</h3>
+		<p>
+			<%= eocm.comment_results.to_s.gsub(/\n/, '<br/>').html_safe %>
+		</p>
+      <h3>Additional comments</h3>
+		<p>
+			<%= eocm.comment_additional.to_s.gsub(/\n/, '<br/>').html_safe %>
+		</p>
+      <h3>List what did not work out as well as intended</h3>
+		<p>
+			<%= eocm.comment_failed.to_s.gsub(/\n/, '<br/>').html_safe %>
+		</p>
+
+          <!--<td><%# link_to 'Show', eocm %></td>-->
+
+	<!-- Show Edit and Submit buttons based on permissions -->
+	<% if (current_user.permission == "I" ) || 
+				(current_user.name == doc.offering.user.name) %>
+		
+		<% if (doc.status == "Not Submitted") || 
+				(doc.status == "Revisions Required") %>
+				
+			<!-- Button to edit form contents -->
+			<td> <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+						</span><%= link_to 'Edit', edit_eocm_path(eocm) %></td>
+
+			<!-- Button to submit form to coordinator -->
+			<!-- Changes status from "Not Submitted" to "Not Reviewed" -->
+      <td> <span class="glyphicon glyphicon-check" aria-hidden="true">
+						</span>  <%= link_to("Submit",
+                  {:controller => 'documents', 
+                  :action => 'update_status', 
+                  :doc_id => doc.id,
+									:new_status => "Not Reviewed"}, method: :patch) %></td>
+     <% end %>
+
+	<% end %>
+
+	<% if (current_user.permission == "C") %>
+
+			<!-- Button to edit form contents -->
+			<td> <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+						</span><%= link_to 'Edit', edit_eocm_path(eocm) %></td>
+
+			<% if (doc.status == "Not Reviewed") %>
+
+			<!-- Button to approve form by coordinator -->
+			<!-- Changes status from "Not Reviewed" to "Approved - Complete" -->
+			<td> <span class="glyphicon glyphicon-check" aria-hidden="true">
+						</span>  <%= link_to("Approve",
+                  {:controller => 'documents', 
+                  :action => 'update_status', 
+                  :doc_id => doc.id,
+									:new_status => "Approved - Complete"}, method: :patch) %></td>
+
+			<!-- Button to send form back to instructor for revisions -->
+			<!-- Changes status from "Not Reviewed" to "Revisions Required" -->
+			<td> <span class="glyphicon glyphicon-check" aria-hidden="true">
+						</span>  <%= link_to("Send Back",
+                  {:controller => 'documents', 
+                  :action => 'update_status', 
+                  :doc_id => doc.id,
+									:new_status => "Revisions Required"}, method: :patch) %></td>
+
+			<% end %>
+	<% end %>
+
+          <!--<td><%# link_to 'Destroy', eocm, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+      </tr>
+
+<!-- Section of code that seems unneeded. But leaving here to be safe -->
+<!--     <% else %> -->
+<!--       <% @eocms.each do |eocm| %>-->
+<!--         <tr>-->
+<!--           <td><%= eocm.evaluation %></td>-->
+<!--           <td><%= eocm.comment_outcomes %></td>-->
+<!--           <td><%= eocm.comment_worked %></td>-->
+<!--           <td><%= eocm.comment_changes %></td>-->
+<!--           <td><%= eocm.comment_rec %></td>-->
+<!--           <td><%= eocm.comment_implemented %></td>-->
+<!--           <td><%= eocm.comment_results %></td>-->
+<!--           <td><%= eocm.comment_additional %></td>-->
+<!--           <td><%= eocm.comment_failed %></td>-->
+<!--           <td><%= link_to 'Show', eocm %></td>-->
+<!--           <td><%= link_to 'Edit', edit_eocm_path(eocm) %></td>-->
+<!--           <td><%= link_to 'Destroy', eocm, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+<!-- </tr>-->
+<!-- <%end%> -->
+
+
+    <%end%>
+  </tbody>
+</table>
+
+<br>
+
+<center>
+<%= link_to "<button type='button' class='btn btn-default'> Home </button>".html_safe , '/browse/index' %>
+</center>
+

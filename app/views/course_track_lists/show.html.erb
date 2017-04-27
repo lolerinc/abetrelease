@@ -1,0 +1,11 @@
+<% ctl = @course_track_list %>
+ <center>
+<h1><span class="label label-primary">Showing Course Track List:</span></h1>
+<h3><span class="label label-info"><%= ":"%></span> <%= ctl.track.name %></h3>
+<h3><span class="label label-info"><%= ":"%></span> <%= ctl.course.name %></h3>
+ 
+ 
+
+  <%= link_to "<button type='button' class='btn btn-default'> Admin Page </button>".html_safe , sys_admin_index_path %>
+  <%= link_to "<button type='button' class='btn btn-default'> Edit </button>".html_safe , edit_course_track_list_path(ctl) %>
+ </center>

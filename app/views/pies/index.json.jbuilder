@@ -1,0 +1,1 @@
+json.array! @pies, partial: 'pies/pie', as: :pie

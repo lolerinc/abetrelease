@@ -1,0 +1,42 @@
+<%# app/views/documents/_list.html.erb %>
+
+<div id="filterrific_results">
+  <div>
+  </div>
+
+  <table class="table">
+    <tr>
+			<th>Instructor</th>
+			<th>Type</th>
+			<th>CRN</th>
+			<th>Dept</th>
+			<th>Course</th>
+			<th>Section</th>
+			<th>Year</th>
+			<th>Term</th>
+      <th>Status</th>
+      <th><%= filterrific_sorting_link(@filterrific, :assigned) %></th>
+			<th><%= filterrific_sorting_link(@filterrific, :due) %></th>
+    </tr>
+    <% documents.each do |document| %>
+      <tr>
+				<td><%= document.offering.user.fname%> <%= document.offering.user.lname%></td>
+				<%# Makes text inside column a link to the docview action, and send doc.id as a paramater named row_id%>
+				<td><%= link_to(document.formType, {:action => 'docview', :row_id => document.id}) %></td>
+				<td><%= document.offering.CRN %></td>
+				<td><%= document.offering.course.code_prefix %></td>
+				<td><%= document.offering.course.code_suffix %></td>
+				<td><%= document.offering.section %></td>
+				<td><%= document.offering.year %></td>
+				<td><%= document.offering.term %></td>
+        <td><%= document.status %></td>
+        <td><%= document.assigned.to_time.strftime('%B %e %Y') %></td>
+				<td><%= document.due.to_time.strftime('%B %e %Y') %></td>
+      </tr>
+    <% end %>
+  </table>
+
+	<%= will_paginate documents %>
+
+</div>
+

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  track_id: 
+  course_id: 
+  abet_outcome_id: 
+
+two:
+  track_id: 
+  course_id: 
+  abet_outcome_id: 

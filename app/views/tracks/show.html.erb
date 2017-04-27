@@ -1,0 +1,11 @@
+<% t = @track %>
+ <center>
+ <h2><span class="label label-primary">Showing Track: <%= t.name  %> </span></h2>
+
+<h2><span class="label label-primary">With Degree: <%= t.degree.name  %> </span></h2>
+ 
+
+  <%= link_to "<button type='button' class='btn btn-default'> Admin Page </button>".html_safe , sys_admin_index_path %>
+  <%= link_to "<button type='button' class='btn btn-default'> Edit </button>".html_safe , edit_track_path(t) %>
+ </center>
+

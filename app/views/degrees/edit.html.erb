@@ -1,0 +1,15 @@
+
+<center>
+<h1><span class="label label-primary">Editing Degree</span></h1>
+</center>
+ 
+  <%= form_for @degree , class: 'form-inline' do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name , {class: "form-control" , style:  "width:350px"} %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %> 
+  <% end %>   
+  <center>
+  <%= link_to "<button type='button' class='btn btn-danger'> Cancel </button>".html_safe , sys_admin_index_path%>
+  </center>
+

@@ -1,0 +1,77 @@
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <h2><span class="label label-primary">Document Description</span></h2>
+  
+  <!-- Table for degrees -->
+  <table class="table"  >
+   
+    <thead>
+      <tr>
+        <th><%= "Type: "%></th>
+        <th><%= "Status: "%></th>
+        <th><%= "Major: "%></th>
+        <th><%= "Course Number: "%></th>
+        <th><%= "Section: "%></th>
+        <th><%= "Course: "%></th>
+        <th><%= "Term: "%></th>
+        <th><%= "Assigned: "%></th>
+        <th><%= "Due: "%></th>
+ <!--       <th><%= "Assigned By: "%></th>  -->
+        <th><%= "Assigned To: "%></th>
+      </tr>
+    </thead>
+    
+    <tbody>
+    <% @data.each do |document| %>
+      <tr>
+        <td><%= document.formType%></td>
+        <td><%= document.status%></td>
+        <td><%= document.offering.course.code_prefix%></td>
+        <td><%= document.offering.course.code_suffix%></td>
+        <td><%= document.offering.section%></td>
+        <td><%= document.offering.course.name%></td>
+        <td><%= document.offering.term%></td>
+        <td><%= document.assigned%></td>
+        <td><%= document.due%></td>
+<!--        <td><%= "James Kirk"%></td>	-->
+        <td><%= document.offering.user.name%></td>
+				<%form = nil %>
+        <% if document.formType == "AIR"%>
+					<% if AIR.exists?(document_id: document.id) %>
+		    		<% form = 'airs' %>
+					<% else %>
+						<h4>Coordinator must initialize form</h4>
+					<% end %>
+	    <% elsif document.formType == "EOCM"%>
+				<% if EOCM.exists?(document_id: document.id) %>
+		    	<% form = 'eocms' %>
+				<% else %>
+					<h4>Coordinator must initialize form</h4>
+				<% end %>
+	    <% else document.formType == "PIE"%>
+				<% if PIE.exists?(document_id: document.id) %>
+		    	<% form = 'pies' %>
+				<% else %>
+					<h4>Coordinator must initialize form</h4>
+				<% end %>
+	    <% end %>
+
+			<% if form != nil %>
+	    	<td><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span><%= link_to("Details", {:controller => form, :action => 'index', :doc_id => document.id}) %></td>
+      	</tr>
+			<% end %> 
+   <% end %>
+  
+    </tbody>
+    
+  </table>
+      <%= link_to "<button type='button' class='btn btn-default'> Home </button>".html_safe , '/browse/index' %>
+
+</div>
+
+
+
+
+
+
+

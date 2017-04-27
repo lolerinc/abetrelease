@@ -1,0 +1,21 @@
+<center>
+<h1><span class="label label-primary">Editing ABET Outcomes</span></h1>
+</center>
+
+  <%= form_for @abet_outcome, class: 'form-inline'   do |f| %>
+  <%= f.label :track_id  %>
+  <!-- <%= f.text_field :track_id,  {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :track_id, Track.all.order('name ASC'), :id, :name, :prompt => "Select" %>
+  <%= f.label :code %>
+  <!-- <%= f.text_field :code , {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.select :code, ('A'..'Q') %>
+  <%= f.label :desc %>
+  <%= f.text_field :desc , {class: "form-control" , style:  "width:350px"} %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>
+ </div>
+
+ <center>
+  <%= link_to "<button type='button' class='btn btn-danger'> Cancel </button>".html_safe , sys_admin_index_path%>
+</center>

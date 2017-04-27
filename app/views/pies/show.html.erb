@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @pie.name %>
+</p>
+
+<p>
+  <strong>Abet outcome:</strong>
+  <%= @pie.abet_outcome %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @pie.description %>
+</p>
+
+<p>
+  <strong>Tpercent:</strong>
+  <%= @pie.tpercent %>
+</p>
+
+<p>
+  <strong>Tscore:</strong>
+  <%= @pie.tscore %>
+</p>
+
+<p>
+  <strong>Rpercent:</strong>
+  <%= @pie.rpercent %>
+</p>
+
+<p>
+  <strong>Rscore:</strong>
+  <%= @pie.rscore %>
+</p>
+
+<p>
+  <strong>Calculation:</strong>
+  <%= @pie.calculation %>
+</p>
+
+<%= link_to 'Home', '/browse/index' %> | 
+<%= link_to 'Edit', edit_pie_path(@pie) %>
+<%# link_to 'Back', :back %>

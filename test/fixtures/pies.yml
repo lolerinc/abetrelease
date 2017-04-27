@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  document_id: 
+  name: MyText
+  abet_outcome: MyString
+  description: MyText
+  tpercent: 1.5
+  tscore: MyText
+  rpercent: 1.5
+  rscore: MyString
+  calculation: MyText
+
+two:
+  document_id: 
+  name: MyText
+  abet_outcome: MyString
+  description: MyText
+  tpercent: 1.5
+  tscore: MyText
+  rpercent: 1.5
+  rscore: MyString
+  calculation: MyText

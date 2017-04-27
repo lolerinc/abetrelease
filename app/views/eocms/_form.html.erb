@@ -1,0 +1,119 @@
+<%= form_for(@eocm) do |f| %>
+  <% if @eocm.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@eocm.errors.count, "error") %> prohibited this eocm from being saved:</h2>
+
+      <ul>
+      <% @eocm.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+<div class="container">
+    <thead><b>Outcome rating rubric</b></thead>
+    <table class="table table-sm">
+    <tr>
+      <th>Excellent</th>
+      <td>Almost all students demonstrated mastery of outcome.</td>
+    </tr>
+    <tr>
+      <th>Good</th>
+      <td>Most students demonstrated mastery of outcome</td>
+    </tr>
+    <tr>
+      <th>Satisfactory</th>
+      <td>Most students demonstrated competence with outcome</td>
+    </tr>
+    <tr>
+      <th>Needs Improvement</th>
+      <td>Many students struggled with outcome concepts and application</td>
+    </tr>
+    <tr>
+      <th>Needs Major Improvement</th>
+      <td>Most students struggled with outcome concepts and application</td>
+    </tr>
+    </table>
+    <p>
+      <b>An improvement plan must be provided for any course outcome that rates lower than “Satisfactory”.</b>
+    </p>
+</div>
+
+
+
+  <!-- <div class="field"> -->
+  <!--  <%= f.label :document_id %><br> -->
+  <!--  <%= f.text_field :document_id , {class: "form-control" , style:  "width:30%"}  %> -->
+  </div>
+  <div class="field">
+    <b>List course outcomes</b><br>
+    <%= f.text_area :evaluation , {class: "form-control" , style:  "width:50%; height: 100px;"}  %>
+  </div>
+  <div class="field">
+    <b>Comments about course outcomes</b><br>
+    <%= f.text_area :comment_outcomes , {class: "form-control" , style:  "width:50%; height:100px;"}  %>
+  </div>
+
+
+<div class="container">
+    <thead><b>Consider these when answering questions below.</b></thead>
+    <table class="table table-sm">
+    <tr>
+      <th>Continuous Improvement</th>
+      <td>Did you implement course improvements identified in previous semesters? Were the students adequately prepared to take the course? </td>
+    </tr>
+    <tr>
+      <th>Student Skills</th>
+      <td>Were the students adequately prepared to take the course? </td>
+    </tr>
+    <tr>
+      <th>Resources</th>
+      <td>Were the textbooks, software, computers and other equipment available?</td>
+    </tr>
+    <tr>
+      <th>Teamwork</th>
+      <td>Did the students work in teams? Describe strengths and weaknesses.</td>
+    </tr>
+    <tr>
+      <th>Communication skills</th>
+      <td>Did the students give oral presentations or write reports? Discuss strengths and weaknesses.</td>
+    </tr>
+    </table>
+</div>
+
+
+
+  <div class="field">
+    <b>List the aspects of the course that worked</b><br>
+    <%= f.text_area :comment_worked , {class: "form-control" , style:  "width:50%; height:100px;"}  %>
+  </div>
+  <div class="field">
+    <b>What changes should be made to the course?</b><br>
+    <%= f.text_area :comment_rec , {class: "form-control" , style:  "width:50%; height:100px;"}  %>
+  </div>
+  <div class="field">
+    <b>What changes were implemented?</b><br>
+    <%= f.text_area :comment_implemented , {class: "form-control" , style:  "width:50%; height:100px;"}  %>
+  </div>
+  <div class="field">
+    <b>What were the results of the changes?</b><br>
+    <%= f.text_area :comment_results , {class: "form-control" , style:  "width:50%; height:100px;"}  %>
+  </div>
+  <div class="field">
+    <b>Additional Comments</b><br>
+    <%= f.text_area :comment_additional , {class: "form-control" , style:  "width:50%; height:100px;"}  %>
+  </div>
+  <div class="field">
+    <b>List what did not work out as well as intended</b><br>
+    <%= f.text_area :comment_failed , {class: "form-control" , style:  "width:50%; height:100px;"}  %>
+  </div>
+     <center>
+    <div style="margin-top:20px" > </div>
+    <%= f.submit :submit, class: 'btn btn-success' %>
+ 
+
+    
+  
+<% end %>

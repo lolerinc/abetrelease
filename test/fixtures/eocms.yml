@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  document_id: 
+  evaluation: MyString
+  comment_outcomes: MyText
+  comment_worked: MyText
+  comment_changes: MyText
+  comment_rec: MyText
+  comment_implemented: MyText
+  comment_results: MyText
+  comment_additional: MyText
+  comment_failed: MyText
+
+two:
+  document_id: 
+  evaluation: MyString
+  comment_outcomes: MyText
+  comment_worked: MyText
+  comment_changes: MyText
+  comment_rec: MyText
+  comment_implemented: MyText
+  comment_results: MyText
+  comment_additional: MyText
+  comment_failed: MyText

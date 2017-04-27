@@ -1,0 +1,41 @@
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <h2><span class="label label-primary">Degrees Index</span></h2>
+   <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#degreeAdd">Add Degree</button>
+
+   <div id="degreeAdd" class="collapse">
+
+  <%= form_for Degree.new , class: 'form-inline' do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name , {class: "form-control" , style:  "width:350px"} %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %> 
+  <% end %>    
+  </div>
+  <!-- Table for degrees -->
+  <table class="table"  >
+   
+    <thead>
+      <tr>
+        <th><%= "Degree: "%></th>
+      </tr>
+    </thead>
+    
+    <tbody>
+    <% @degrees.each do |degree| %>
+      <tr>
+        <td><%= degree.name %></td>
+        <td> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>  <%= link_to 'Details', degree_path(degree) %></td>
+      </tr>
+   <% end %>
+  
+    </tbody>
+    
+  </table>
+  
+  <%= link_to "<button type='button' class='btn btn-default'> Admin Page </button>".html_safe , sys_admin_index_path %>
+
+  
+</div>
+

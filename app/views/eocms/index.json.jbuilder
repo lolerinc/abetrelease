@@ -1,0 +1,1 @@
+json.array! @eocms, partial: 'eocms/eocm', as: :eocm

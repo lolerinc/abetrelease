@@ -1,0 +1,25 @@
+<center>
+<h1><span class="label label-primary">Editing User</span></h1>
+</center>  
+  <%= form_for  @user, class: 'form-inline'  do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name , {class: "form-control" , style:  "width:350px"}  %>
+  <%= f.label :fname %>
+  <%= f.text_field :fname , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :lname %>
+  <%= f.text_field :lname , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :email %>
+  <%= f.text_field :email , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :permission %>
+  <!-- <%= f.text_field :permission , {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.select :permission, options_for_select([ ["I (instructor)", "I"], 
+                              ["C (coordinator)", "C"], ["A (admin)", "A"], 
+                              ["E (evaluator)", "C"] ]) %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>   
+
+
+  <center>
+  <%= link_to "<button type='button' class='btn btn-danger'> Cancel </button>".html_safe , sys_admin_index_path%>
+  </center>

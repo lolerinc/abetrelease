@@ -1,0 +1,11 @@
+<% l = @library %>
+ <center>
+<h1><span class="label label-primary">Showing Course:</span></h1>
+<h3><span class="label label-info"><%= "Course:"%></span> <%=  l.offering.course.name %></h3>
+<h3><span class="label label-info"><%= "Section:"%></span> <%= l.offering.section %></h3>
+<h3><span class="label label-info"><%= "Document:"%></span> <%= l.document.name %></h3>
+ 
+
+  <%= link_to "<button type='button' class='btn btn-default'> Admin Page </button>".html_safe , sys_admin_index_path %>
+  <%= link_to "<button type='button' class='btn btn-default'> Edit </button>".html_safe , edit_library_path(l) %>
+ </center>

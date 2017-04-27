@@ -1,0 +1,48 @@
+<%= form_for_filterrific @filterrific do |f| %>
+
+ <form class="form-horizontal" role="form">
+  <div class="form-inline">
+  <div style="margin-left:50px" >
+		<label>Track </label>
+    <%= f.select(
+      :with_abet_outcome_track_name,
+      @filterrific.select_options[:with_abet_outcome_track_name],
+      { include_blank: '- Select One -' }, { multiple: false , style:  "width:350px", class: "form-control" } 
+    ) %>
+	
+ 
+    <%= link_to(
+      'Reset filters',
+      reset_filterrific_url,class: 'btn btn-info btn-xl'
+    ) %>
+ 
+  <%# add an automated spinner to your form when the list is refreshed %>
+  <%= render_filterrific_spinner %>
+<% end %>
+ </div>
+ </div>
+ </form>
+ 
+ <div style="margin-top:20px" > </div>
+<%= render(
+  partial: 'master_matrices/list',
+  locals: { master_matrices: @matrixinfo }
+) %>
+
+
+<% if current_user.permission == "C" %>
+<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#matrixAdd">Add Value</button>
+
+<div id="matrixAdd" class="collapse">
+
+<%= render(
+  partial: 'master_matrices/add',
+  locals: { master_matrices: @matrixinfo }
+) %>
+
+
+</div>
+<% end %>
+
+ <div style="margin-top:20px" > </div>
+

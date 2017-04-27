@@ -1,0 +1,2 @@
+module AbetMetricsHelper
+end

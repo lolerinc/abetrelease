@@ -1,0 +1,94 @@
+
+<%= form_for_filterrific @filterrific, html: { id: 'filterrific-no-ajax-auto-submit' } do |f| %>
+  <div>
+
+   <div class="form-inline">
+   <center>
+   
+  <label >User</label>
+    <%= f.select(
+      :with_offering_fname_and_lname,
+      @filterrific.select_options[:with_offering_fname_and_lname],
+      { include_hidden: false, include_blank: '- Any -' },  { multiple: true, style:  "width:200px",  class: "form-control"}
+    ) %>
+       <label >Type</label>
+		<%= f.select(
+      :with_formType,
+      @filterrific.select_options[:with_formType],
+      { include_hidden: false, include_blank: '- Any -' }, { multiple: true, style:  "width:100px",  class: "form-control"}
+    ) %>
+       <label >Status</label>
+		<%= f.select(
+      :with_status,
+      @filterrific.select_options[:with_status],
+      { include_hidden: false, include_blank: '- Any -' }, { multiple: true, style:  "width:200px",  class: "form-control"}
+    ) %>
+    
+       <label >Major</label>
+    <%= f.select(
+      :with_offering_course_code_prefix,
+      @filterrific.select_options[:with_offering_course_code_prefix],
+      { include_hidden: false, include_blank: '- Any -' }, { multiple: true, style:  "width:100px",  class: "form-control"}
+
+    ) %>
+       <label >Course</label>
+    <%= f.select(
+      :with_offering_course_code_suffix,
+      @filterrific.select_options[:with_offering_course_code_suffix],
+      { include_hidden: false, include_blank: '- Any -' }, { multiple: true, style:  "width:100px",  class: "form-control"}
+
+    ) %>
+       <label >Year</label>
+    <%= f.select(
+      :with_offering_year,
+      @filterrific.select_options[:with_offering_year],
+      { include_hidden: false, include_blank: '- Any -' }, { multiple: true, style:  "width:100px",  class: "form-control"}
+
+    ) %>
+       <label >Term</label>
+    <%= f.select(
+      :with_offering_term,
+      @filterrific.select_options[:with_offering_term],
+      { include_hidden: false, include_blank: '- Any -' }, { multiple: true, style:  "width:100px",  class: "form-control"}
+
+    ) %>
+    
+     </center>
+
+
+
+
+  <div style="margin-top:15px"></div>
+  
+
+  
+  <div class="form-inline" style="margin-left:15px">
+    <label >Sorted by</label>
+    
+    <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by],{}, {style:  "width:300px",  class: "form-control"}) %>
+  </div>
+   
+
+   
+    
+  <div style="margin-top:10px"></div>  
+       <div class="form-inline">
+        <center>
+        <%# add an automated spinner to your form when the list is refreshed %>
+        <%= render_filterrific_spinner %>
+        <%= f.submit 'Filter', class: 'btn btn-success btn-xl' %>
+        <% end %>
+  
+        <%= link_to(
+        'Reset filters',
+        reset_filterrific_url, :class =>"btn btn-danger btn-xl"
+        ) %>
+       </center>
+      </div>
+	<div style="margin-top:5px"></div>
+
+<%= render(
+  partial: 'documents/list',
+  locals: { documents: @documents }
+) %>
+

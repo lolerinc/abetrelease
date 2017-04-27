@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  offering_id: 
+  abet: MyString
+  rating: MyString
+
+two:
+  offering_id: 
+  abet: MyString
+  rating: MyString

@@ -1,0 +1,136 @@
+<p id="notice"><%= notice %></p>
+
+<style>
+  h3  {color: #337ab7;}
+  th  {color: #337ab7;}
+  thead {color: #337ab7;}
+  b {color: #337ab7;}
+</style>
+
+
+<center><h2><span class="label label-primary">Performance Indicator Evaluation</span></h2></center>
+
+  <% if(params.has_key?(:doc_id)) %>
+    <% pie = @pie.first %>
+    <% doc = @doc.first %>
+
+		<thead><b><%= doc.offering.course.name %></b></thead>
+    <table class="table table-compact">
+    <tr>
+      <td><%= doc.offering.user.fname %></td>
+      <td><%= doc.offering.user.lname %></td>
+      <td><%= doc.offering.user.email %></td>
+    </tr>
+    <tr>
+      <td><%= doc.offering.CRN %></td>
+      <td><%= doc.offering.course.code_prefix %></td>
+      <td><%= doc.offering.course.code_suffix %></td>
+      <td><%= doc.offering.section %></td>
+    </tr>
+    <tr>
+      <td><%= doc.offering.term %></td>
+      <td><%= doc.offering.year %></td>
+      <td>001</td>
+    </tr>
+    </table>
+	
+
+<h3>ABET outcome</h3>
+<p><%= pie.abet_outcome %></p>
+<h3>Performance Indicator</h3>
+<p><%= pie.name %></p>
+<h3>Describe how the PIE demonstrates attainment of ABET outcome</h3>
+<p><%= pie.description.to_s.gsub(/\n/, '<br/>').html_safe %></p>
+<h3>Target % of students</h3>
+<p><%= pie.tpercent %></p>
+<h3>Target score</h3>
+<p><%= pie.tscore %></p>
+<h3>% of students who met target</h3>
+<p><%= pie.rpercent %></p>
+<h3>Target met / target not met</h3>
+<p><%= pie.rscore %></p>
+<h3>Calculation of results</h3>
+<p><%= pie.calculation.to_s.gsub(/\n/, '<br/>').html_safe %></p>
+
+
+  <!-- Show Edit and Submit buttons based on permissions -->
+  <% if (current_user.permission == "I" ) ||
+        (current_user.name == doc.offering.user.name) %>
+
+    <% if (doc.status == "Not Submitted") ||
+        (doc.status == "Revisions Required") %>
+
+      <!-- Button to edit form contents -->
+      <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+            </span><%= link_to 'Edit', edit_pie_path(pie) %></td>
+
+      <!-- Button to submit form to coordinator -->
+      <!-- Changes status from "Not Submitted" to "Not Reviewed" -->
+      <td> <span class="glyphicon glyphicon-check" aria-hidden="true">
+            </span>  <%= link_to("Submit",
+                  {:controller => 'documents',
+                  :action => 'update_status',
+                  :doc_id => doc.id,
+                  :new_status => "Not Reviewed"}, method: :patch) %></td>
+     <% end %>
+
+  <% end %>
+
+  <% if (current_user.permission == "C") %>
+
+      <!-- Button to edit form contents -->
+      <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+            </span><%= link_to 'Edit', edit_pie_path(pie) %></td>
+
+      <% if (doc.status == "Not Reviewed") %>
+
+      <!-- Button to approve form by coordinator -->
+      <!-- Changes status from "Not Reviewed" to "Approved - Complete" -->
+      <td> <span class="glyphicon glyphicon-check" aria-hidden="true">
+            </span>  <%= link_to("Approve",
+                  {:controller => 'documents',
+                  :action => 'update_status',
+                  :doc_id => doc.id,
+                  :new_status => "Approved - Complete"}, method: :patch) %></td>
+
+      <!-- Button to send form back to instructor for revisions -->
+      <!-- Changes status from "Not Reviewed" to "Revisions Required" -->
+      <td> <span class="glyphicon glyphicon-check" aria-hidden="true">
+            </span>  <%= link_to("Send Back",
+                  {:controller => 'documents',
+                  :action => 'update_status',
+                  :doc_id => doc.id,
+                  :new_status => "Revisions Required"}, method: :patch) %></td>
+
+      <% end %>
+  <% end %>
+
+
+<!-- Section of code that seems unneeded. But leaving here to be safe -->
+<!--    <% else %> -->
+<!--      <% @pies.each do |pie| %>-->
+<!--        <tr>-->
+<!--          <td><%= pie.name %></td>-->
+<!--          <td><%= pie.abet_outcome %></td>-->
+<!--          <td><%= pie.description %></td>-->
+<!--          <td><%= pie.tpercent %></td>-->
+<!--          <td><%= pie.tscore %></td>-->
+<!--          <td><%= pie.rpercent %></td>-->
+<!--          <td><%= pie.rscore %></td>-->
+<!--          <td><%= pie.calculation %></td>-->
+<!--          <td> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> <%= link_to 'Show', pie %></td>-->
+<!--          <td> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> <%= link_to 'Edit', edit_pie_path(pie) %></td>-->
+<!--          <td> <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> <%= link_to 'Destroy', pie, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+<!--        </tr>-->
+<!--      <%end%>-->
+
+
+    <%end%>
+  </tbody>
+</table>
+
+<br>
+
+<center>
+<%= link_to "<button type='button' class='btn btn-default'> Home </button>".html_safe , '/browse/index' %>
+</center>

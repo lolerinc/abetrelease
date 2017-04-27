@@ -1,0 +1,7 @@
+NOTICE:
+
+To get multiple select working in filterrific, 
+modified the Gem directly!
+This is a quick fix that allows us to get the functionality we need,
+and we will work with the Gem developer to come up with a better solution. 
+

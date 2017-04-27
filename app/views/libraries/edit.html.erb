@@ -1,0 +1,19 @@
+
+<center>
+<h1><span class="label label-primary">Editing Library</span></h1>
+</center>
+ 
+  <%= form_for @library, class: 'form-inline'   do |f| %>
+  <%= f.label :offering_id  %>
+  <!-- <%= f.text_field :offering_id,  {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :offering_id, Offering.all.order('crn ASC'), :id, :CRN, :prompt => "Select CRN" %>
+  <%= f.label :document_id %>
+  <!-- <%= f.text_field :document_id , {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :document_id, Document.all.order('name ASC'), :id, :name, :prompt => "Select" %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>
+  <center>
+  <%= link_to "<button type='button' class='btn btn-danger'> Cancel </button>".html_safe , sys_admin_index_path%>
+  </center>
+

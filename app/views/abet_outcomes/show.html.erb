@@ -1,0 +1,13 @@
+<% o = @abet_outcome %>
+ <center>
+<h1><span class="label label-primary">Showing ABET Outcome</span></h1>
+<h3><span class="label label-info"><%= "Track:"%></span> <%= o.track.name %></h3>
+<h3><span class="label label-info"><%= "Code:"%></span> <%= o.code %></h3>
+<h3><span class="label label-info"><%= "Description:"%></span> <%= o.desc %></h3>
+
+ 
+
+
+  <%= link_to "<button type='button' class='btn btn-default'> Admin Page </button>".html_safe , sys_admin_index_path %>
+  <%= link_to "<button type='button' class='btn btn-default'> Edit </button>".html_safe , edit_abet_outcome_path(o)  %>
+ </center>

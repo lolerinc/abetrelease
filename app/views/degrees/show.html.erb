@@ -1,0 +1,8 @@
+<% d = @degree %>
+ <center>
+<h1><span class="label label-primary">Showing Degree: <%= d.name %> </span></h1>
+ 
+
+  <%= link_to "<button type='button' class='btn btn-default'> Admin Page </button>".html_safe , sys_admin_index_path %>
+  <%= link_to "<button type='button' class='btn btn-default'> Edit </button>".html_safe , edit_degree_path(d) %>
+ </center>

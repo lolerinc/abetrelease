@@ -1,0 +1,2 @@
+module CourseOutcomeHelper
+end

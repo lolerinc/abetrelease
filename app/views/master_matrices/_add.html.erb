@@ -1,0 +1,20 @@
+
+<div id="addvalues">
+
+    <%if @matrixinfo[0] != nil %>
+    
+        <% counter = @matrixinfo[0].track.id%>
+    <%else%>
+        
+    <% end %>   
+  
+<%= form_for @newData , :html => {:class => "form-horizontal center"} do |f| %>
+   <label>Track: </label>  <%= f.select :track_id, Track.where(:id => counter).collect { |s| [s.name, s.id]} , {}, {include_blank: true, class: "form-control", style:  "width:350px"}   %>
+   <label>Course: </label>  <%= f.select :course_id, Course.all.collect { |s| [s.name, s.id]} ,{},{ include_blank: true, class: "form-control", style:  "width:650px"} %>
+   <label>ABET Outcome: </label>  <%= f.select :abet_outcome_id, AbetOutcome.where(:track => counter).collect { |s| [s.desc, s.id]} ,{}, { include_blank: true, class: "form-control", style:  "width:650px"}  %>
+   <%= f.submit :Submit, class: 'btn btn-success'%>
+<% end %>
+
+
+</div>
+

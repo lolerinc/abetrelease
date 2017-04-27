@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @air.name %>
+</p>
+
+<p>
+  <strong>ABET Outcome:</strong>
+  <%= @air.abetOutcome %>
+</p>
+
+<p>
+  <strong>Assignee1:</strong>
+  <%= @air.assignee1 %>
+</p>
+
+<p>
+  <strong>Assignee2:</strong>
+  <%= @air.assignee2 %>
+</p>
+
+<p>
+  <strong>Assignee3:</strong>
+  <%= @air.assignee3 %>
+</p>
+
+<p>
+  <strong>Assignee4:</strong>
+  <%= @air.assignee4 %>
+</p>
+
+<p>
+  <strong>Meetingname:</strong>
+  <%= @air.meetingName %>
+</p>
+
+<p>
+  <strong>Meetingdate:</strong>
+  <%= @air.meetingDate %>
+</p>
+
+<p>
+  <strong>Analysis:</strong>
+  <%= @air.analysis %>
+</p>
+
+<p>
+  <strong>Taken:</strong>
+  <%= @air.taken %>
+</p>
+
+<p>
+  <strong>Conclusion:</strong>
+  <%= @air.conclusion %>
+</p>
+
+<%= link_to 'Home', sys_admin_index_path %> | 
+<%= link_to 'Edit', edit_air_path(@air) %>
+<%# link_to 'Back', :back %>

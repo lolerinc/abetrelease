@@ -1,0 +1,62 @@
+<style>
+  h3  {color: #337ab7;}
+  th  {color: #337ab7;}
+  thead {color: #337ab7;}
+  b {color: #337ab7;}
+</style>
+
+
+<%= form_for(@pie) do |f| %>
+  <% if @pie.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pie.errors.count, "error") %> prohibited this pie from being saved:</h2>
+
+      <ul>
+      <% @pie.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<!--  <div class="field"> -->
+<!--    <%= f.label :document_id %><br> -->
+<!--    <%= f.text_field :document_id , {class: "form-control" , style:  "width:30%"} %> -->
+<!--  </div> -->
+  <div class="field">
+    <b>Performance indicator</b><br>
+    <%= f.text_area :name , {class: "form-control" , style:  "width:50%; height:100px;"}  %>
+  </div>
+  <div class="field">
+    <b>ABET outcome</b><br>
+    <%= f.text_field :abet_outcome , {class: "form-control" , style:  "width:30%"} %>
+  </div>
+  <div class="field">
+    <b>Describe how the PIE demonstrates attainment of ABET outcome</b><br>
+    <%= f.text_area :description , {class: "form-control" , style:  "width:50%; height:100px;"} %>
+  </div>
+  <div class="field">
+    <b>Target % of students</b><br>
+    <%= f.text_field :tpercent , {class: "form-control" , style:  "width:30%"} %>
+  </div>
+  <div class="field">
+    <b>Target score</b><br>
+    <%= f.text_area :tscore , {class: "form-control" , style:  "width:50%; height:100px;"} %>
+  </div>
+  <div class="field">
+    <b>% of students who met target</b><br>
+    <%= f.text_field :rpercent , {class: "form-control" , style:  "width:30%"} %>
+  </div>
+  <div class="field">
+    <b>Target met / target not met</b><br>
+    <%= f.text_field :rscore , {class: "form-control" , style:  "width:30%"} %>
+  </div>
+  <div class="field">
+    <b>Calculation of results</b><br>
+    <%= f.text_area :calculation , {class: "form-control" , style:  "width:50%; height:100px;"}  %>
+  </div>
+   <center>
+  <div style="margin-top:20px" > </div>
+    <%= f.submit :Submit, class: 'btn btn-success' %>
+ 
+<% end %>

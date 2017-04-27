@@ -1,0 +1,19 @@
+
+<center>
+<h1><span class="label label-primary">Editing Course Track List</span></h1>
+</center>
+
+  <%= form_for @course_track_list, class: 'form-inline'   do |f| %>
+  <%= f.label :track_id  %>
+  <!-- <%= f.text_field :track_id,  {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :track_id, Track.all.order('name ASC'), :id, :name, :prompt => "Select" %>
+  <%= f.label :course_id %>
+  <!-- <%= f.text_field :course_id , {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :course_id, Course.all.order('name ASC'), :id, :name, :prompt => "Select" %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %>  
+  <center>
+  <%= link_to "<button type='button' class='btn btn-danger'> Cancel </button>".html_safe , sys_admin_index_path%>
+  </center>
+

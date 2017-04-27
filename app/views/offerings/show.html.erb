@@ -1,0 +1,18 @@
+<% o = @offering %>
+ <center>
+ <h2><span class="label label-primary">Showing Offering  </span></h2>
+
+ <%= "CRN: "%><%= o.CRN %><br>
+ <%= "Section: "%><%= o.section %><br>
+<%= "Year: "%><%= o.year %><br>
+<%= "Term: "%><%= o.term %><br>
+<%= "Evaluation: "%><%= o.evaluation %><br>
+<%= "Course: "%><%= o.course.name %><br>
+ 
+
+  <%= link_to "<button type='button' class='btn btn-default'> Admin Page </button>".html_safe , sys_admin_index_path %>
+  <%= link_to "<button type='button' class='btn btn-default'> Edit </button>".html_safe , edit_offering_path(o)  %>
+ </center>
+
+
+

@@ -1,0 +1,2 @@
+json.extract! eocm, :id, :document_id, :evaluation, :comment_outcomes, :comment_worked, :comment_changes, :comment_rec, :comment_implemented, :comment_results, :comment_additional, :comment_failed, :created_at, :updated_at
+json.url eocm_url(eocm, format: :json)

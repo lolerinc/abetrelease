@@ -1,0 +1,9 @@
+<% js = escape_javascript(
+  render(partial: 'master_matrices/list', locals: { master_matrices: @matrixinfo })
+) %>
+$("#filterrific_results").html("<%= js %>");
+
+<% js2 = escape_javascript(
+  render(partial: 'master_matrices/add', locals: { master_matrices: @matrixinfo })
+) %>
+$("#addvalues").html("<%= js2 %>");

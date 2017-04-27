@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  document_id: 
+  name: MyString
+  assignee1: MyString
+  assignee2: MyString
+  assignee3: MyString
+  assignee4: MyString
+  meetingName: MyString
+  meetingDate: 2016-11-27
+  analysis: MyText
+  taken: MyText
+  conclusion: MyText
+
+two:
+  document_id: 
+  name: MyString
+  assignee1: MyString
+  assignee2: MyString
+  assignee3: MyString
+  assignee4: MyString
+  meetingName: MyString
+  meetingDate: 2016-11-27
+  analysis: MyText
+  taken: MyText
+  conclusion: MyText

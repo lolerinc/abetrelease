@@ -1,0 +1,76 @@
+<%= form_for(@air) do |f| %>
+  <% if @air.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@air.errors.count, "error") %> prohibited this air from being saved:</h2>
+
+      <ul>
+      <% @air.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<!--  <div class="field"> -->
+<!--    <%= f.label :document_id %> -->
+<!--    <%= f.text_field :document_id  , {class: "form-control" , style:  "width:30%"} %> -->
+<!--  </div> -->
+  <div class="field">
+    <b>Action item name</b>
+    <%= f.text_field :name , {class: "form-control" , style:  "width:30%"}  %>
+  </div>
+  <div class="field">
+    <b>ABET Outcome</b>
+    <%= f.text_field :abetOutcome , {class: "form-control" , style:  "width:30%"}  %>
+  </div>
+  <div class="field">
+    <b>Lead assignee</b><br>
+    <%= f.text_field :assignee1 , {class: "form-control" , style:  "width:30%"}  %>
+  </div>
+  <div class="field">
+    <b>Assignee 2 (optional)</b><br>
+    <%= f.text_field :assignee2 , {class: "form-control" , style:  "width:30%"}  %>
+  </div>
+  <div class="field">
+    <b>Assignee 3 (optional)</b><br>
+    <%= f.text_field :assignee3 , {class: "form-control" , style:  "width:30%"}  %>
+  </div>
+  <div class="field">
+    <b>Assignee 4 (optional)</b><br>
+    <%= f.text_field :assignee4 , {class: "form-control" , style:  "width:30%"}  %>
+  </div>
+  <div class="field">
+    <b>Meeting name</b><br>
+    <%= f.text_field :meetingName , {class: "form-control" , style:  "width:30%"} %>
+  </div>
+  <div class="field">
+    <b>Meeting date</b><br>
+    <div class='input-group date' >
+      <%= f.text_field :meetingDate , {class: "form-control datetimepicker1", style:  "width:30%px" }  %><br>
+    </div>
+  </div>
+  <div class="field">
+    <b>Analysis of issue / Opportunity for improvement</b><br>
+    <%= f.text_area :analysis , {class: "form-control" , style:  "width:50%; height:100px;"}  %>
+  </div>
+  <div class="field">
+    <b>Actions taken</b><br>
+    <%= f.text_area :taken , {class: "form-control" , style:  "width:50%; height:100px;" }  %>
+  </div>
+  <div class="field">
+    <b>Conclusions</b><br>
+    <%= f.text_area :conclusion , {class: "form-control" , style:  "width:50%; height: 100px;"}  %>
+   <center>
+    <div style="margin-top:20px" > </div>
+    <%= f.submit :Submit, class: 'btn btn-success' %>
+ 
+
+ 
+<% end %>
+
+<script type="text/javascript">
+  $(function () {
+    $('.datetimepicker').datetimepicker({format: "YYYY-MM-DD hh:mm a ", useCurrent: false //Important! See issue #1075
+    });
+  });
+</script>

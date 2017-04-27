@@ -1,0 +1,22 @@
+<% d = @document %>
+ <center>
+ <h2><span class="label label-primary">Showing Document  </span></h2>
+
+		<%= "Type: "%><%= d.formType%><br>
+        <%= "Status: "%><%= d.status%><br>
+        <%= "Major: "%><%= d.offering.course.code_prefix%><br>
+        <%= "Course Number: "%><%= d.offering.course.code_suffix%><br>
+        <%= "Section: "%><%= d.offering.section%><br>
+        <%= "Course: "%><%= d.offering.course.name%><br>
+        <%= "Term: "%><%= d.offering.term%><br>
+        <%= "Assigned: "%><%= d.assigned%><br>
+        <%= "Due: "%><%= d.due%><br>
+        <%= "Assigned To: "%><%= d.offering.user.name%><br>
+ 
+
+  <%= link_to "<button type='button' class='btn btn-default'> Admin Page </button>".html_safe , sys_admin_index_path %>
+  <%= link_to "<button type='button' class='btn btn-default'> Edit </button>".html_safe , edit_document_path(d)  %>
+ </center>
+
+
+

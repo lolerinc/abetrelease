@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ABETDocumentManager</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <p class="navbar-brand">ABET</p>
+    </div>
+
+
+<!--  Display navigation links if logged in -->
+<% if logged_in? %>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="<%= 'active' if params[:controller] == 'documents' %>"> <%= link_to "Browse", browse_index_url%></li>
+        <li class="<%= 'active' if params[:controller] == 'master_matrices' %>"> <%= link_to "Master Matrices", master_matrices_index_url%> </li> 
+        <li class="<%= 'active' if params[:controller] == 'offerings' %>"> <%= link_to "Tracker", offerings_index_url%> </li>
+
+				<% if current_user.permission == "A" || current_user.permission == "C" %>
+				<li class="<%= 'active' if params[:controller] == 'sys_admin_index' %>"> <%= link_to "Configure", sys_admin_index_url%> </li>
+				<% end %>
+        
+      </ul>
+      <form class="navbar-form navbar-left">
+
+      </form>
+      <p class="navbar-text navbar-right">Signed in as <%= current_user.fname%> <%= current_user.lname%> - <b><%= get_user_type_string %></b> | <%=link_to "Sign out?", logout_url, method: "delete" %> </p>
+
+
+<% end %>
+
+      <ul class="nav navbar-nav navbar-right">
+        
+        
+      </ul>
+      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+  
+  
+</head>
+<body>
+  <% flash.each do |message_type, message| %>
+  <div class="alert alert-<%= message_type %>"><%= message %></div>
+  <% end %>
+
+<%= yield %>
+
+</body>
+</html>

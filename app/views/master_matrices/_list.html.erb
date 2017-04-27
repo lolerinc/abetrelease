@@ -1,0 +1,205 @@
+<%# app/views/documents/_list.html.erb %>
+
+
+<div id="filterrific_results">
+    <% enabler = 0%>
+    
+    <%if @matrixinfo[0] != nil %>
+    
+        <% counter = @matrixinfo[0].track.id%>
+    <%else%>
+        <%enabler += 1%>
+    <% end %>    
+    
+    
+    <% idArray = []%>
+    <% orderedMatrix = @matrixinfo.order('abet_outcome_id')%>
+    
+            <% orderedMatrix.each do |s| %>
+            
+            
+                <%if counter == s.track.id %> 
+                        
+                
+                <%else%> 
+                        <%enabler += 1 %>
+                        <%break%> 
+                <%end%>
+                <% counter = s.track.id%>     
+            <%end%>    
+            
+    <%if enabler == 0 %>
+
+    <div>
+    </div>
+    <div class="container">
+
+        <% counter = 0 %>
+        <% headCount = 0%>
+        
+        <% letterpos = Hash.new {|h,k| h[k]=[]}%>
+        
+    
+        <% titlepos = [0]%> 
+        <% abetLetters = []%>
+        <% boolAbet = 0 %>
+    
+    <table class="table">
+        <tr>
+            <th>Course Name</th>
+            <% orderedMatrix.each do |s| %>
+            <%abetLetters.push(s.course.id)%>
+                    
+                    <%titlepos.each do |title| %>
+                        
+                        <% if title == s.abet_outcome.id %>
+                                
+                                <% boolAbet = 1 %>
+                            
+                                <% break %>
+                        
+                        <% end %>
+                    
+                    <%end %>
+                    
+                    <% if boolAbet == 0 %>
+                    <% titlepos.push(s.abet_outcome.id)%>  
+                    
+                        <th>             
+                            <%= s.abet_outcome.desc%>                  
+                            <ul class="list-group"> 
+                            <li class="list-group-item"> <center> <%= s.abet_outcome.code %> </center> </li> 
+                            </ul>
+                
+                        </th>
+                    <% headCount += 1 %>
+                    
+                    <%end %>
+                    <% boolAbet = 0 %>
+            <% end %>
+            
+            <th> <center>Count</center> </th>
+        </tr>
+    
+        
+        <% orderedMatrix.each_with_index do |s| %>
+       
+            <% temp = s.course.id %>
+
+            <% temp2 = s.abet_outcome.id %>
+
+            <% letterpos[temp] << temp2 %>                  
+
+        <% end %>
+        
+        
+
+        <% loopLength =  letterpos.length %>
+    
+        <% loopStop = 0 %>
+
+    
+
+        <% abetLetters = abetLetters.uniq %>
+        <% arrayOfIndex = letterpos.values[0] %> 
+        <% space = arrayOfIndex[0] %>
+        <% abetLetterIndex = 0%>
+        <% idCounter = 0%>
+        
+        <% orderedMatrix.each do |s| %>
+           
+            <% abetCounter = 0 %>
+            <% abetCounterPlacement = 0%>
+            
+          
+            
+            <% if abetLetters[abetLetterIndex] == s.course.id %>
+                <% letterpos.each do |key, arrayvals| %>
+                   
+                    <% if key == s.course.id  %>
+                        <tr>
+                        <td> <%= s.track.degree.name %> <%= s.course.code_suffix %>  <%= s.course.name %>  </td>
+                        
+                        <% space = arrayOfIndex[0] %>
+
+                        <% arrayvals.each do | index| %>
+                        
+                            <% loop do %>
+
+                                <% if index == space%>
+                                    
+                                    <%idTemp = MasterMatrix.where(abet_outcome_id: index, course_id: key)%>
+                                    
+                                    <td> <center>  <span class = "glyphicon glyphicon-ok" >
+                                   	<% if current_user.permission == "C" %> 
+                                    <%= link_to "Delete", :action => 'delete', :id => idTemp.ids[0],
+                                        data: {confirm: "Are you sure?"}%>
+                                    <% end %>
+                                    </span> </center>  </td>
+                                    <% abetCounter += 1 %>
+                                    <% abetCounterPlacement += 1 %>
+                                    <% idCounter += 1%>
+
+                                <% else %> 
+                                    <% if titlepos.index(space) != nil %>
+                                    
+                                        <% abetCounterPlacement += 1 %>           
+                                        <td> </td>   
+                                    
+                                    <% end %>  
+                                    
+                                <% end %> 
+                                <% space +=1 %>
+
+
+
+                                <% break if space > index %>
+                            <%end%> 
+
+                        <%end%>
+
+
+                        <% loop do %>
+
+                            <% if headCount == abetCounterPlacement%>
+
+                                <td> <center> <label>  <%= abetCounter%> </label>  </center>  </td>
+
+                            <% else %>           
+                                <td></td>    
+                            <%end%>
+                            
+                            <% abetCounterPlacement += 1 %>
+                            <% break if abetCounterPlacement > headCount %>
+                        <%end%> 
+
+                        </tr>
+                    
+                        <% abetLetterIndex += 1 %>
+                    <%else %>
+                        <%loopStop -= 1 %>    
+
+                    <% end %> 
+
+                <% end %>
+            <% end %> 
+
+            <%loopStop += 1 %>    
+            
+            <% if loopLength == loopStop %>
+                
+               
+            <% end %>
+
+
+        <% end %> 
+        
+    </table>
+    
+    </div>
+
+
+
+    <%end%>
+
+ </div>

@@ -1,0 +1,14 @@
+<% t = @teaching %>
+ <center>
+ <h2><span class="label label-primary">Showing Teahing</span></h2>
+
+    <%= "Instructor: "%><%= t.user.fname %><%= " " %><%= t.user.lname %><br>
+    <%= "Course Name: "%><%= t.offering.course.name %><br>
+    <%= "CRN: "%><%= t.offering.CRN %><br>
+ 
+
+  <%= link_to "<button type='button' class='btn btn-default'> Admin Page </button>".html_safe , sys_admin_index_path %>
+  <%= link_to "<button type='button' class='btn btn-default'> Edit </button>".html_safe , edit_teaching_path(t)  %>
+ </center>
+ 
+

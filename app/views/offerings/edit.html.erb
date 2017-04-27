@@ -1,0 +1,28 @@
+<center>
+<h1><span class="label label-primary">Editing Offering</span></h1>
+</center>  
+  <%= form_for @offering, class: 'form-inline' do |f| %>
+  <%= f.label :CRN %>
+  <%= f.text_field :CRN , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :section %>
+  <%= f.text_field :section , {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :year %>
+  <%= f.text_field :year, {class: "form-control" , style:  "width:350px"} %>
+  <%= f.label :term %>
+  <!-- <%= f.text_field :term ,{class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.select :term, (1..12) %>
+  <%= f.label :evaluation %>
+  <!-- <%= f.text_field :evaluation , {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.select :evaluation, options_for_select(["Pass", "Fail", "Other", "--"]) %>
+  <%= f.label :course_id %>
+  <!-- <%= f.text_field :course_id, {class: "form-control" , style:  "width:350px"} %> -->
+  <%= f.collection_select :course_id, Course.all.order('name ASC'), :id, :name, :prompt => "Select" %>
+  <div style="margin-top:10px" > </div>
+  <%= f.submit :Submit, class: 'btn btn-success'  %>
+  <% end %> 
+  </div>
+
+
+  <center>
+  <%= link_to "<button type='button' class='btn btn-danger'> Cancel </button>".html_safe , sys_admin_index_path%>
+  </center>

@@ -1,0 +1,92 @@
+<div id="filterrific_results">
+  <div>
+  </div>
+  <table class="table table-bordered">
+    <tr>
+      <th>Year</th>
+			<th>CRN</th>
+      <th>Dept</th>
+      <th>Course</th>
+      <th>Section</th>
+      <th>Name</th>
+      <th>Instructor</th>
+      <th>Evaluation</th>
+    <% ("A".."Q").each do |i|%>
+				<th><%=i%></th>
+		<%end%>
+			</tr>
+    <% offerings.each do |offering| %>
+      <tr>
+        <td><%= offering.year %></td>
+        <td><%= offering.CRN %></td>
+        <td><%= offering.course.code_prefix %></td>
+        <td><%= offering.course.code_suffix %></td>
+        <td><%= offering.section %></td>
+				<td><%= offering.course.name %></td>
+        <td><%= offering.user.fname %> <%= offering.user.lname %></td>
+
+        <td bgColor="<%=GetColorFromEvaluation offering.evaluation %>">
+	
+				<!-- This section allows a coordinator to evaluate an offering -->
+				<% if current_user.permission == "C" %>
+				<b><center>
+					<%= link_to("change",
+						{:controller => 'offerings',
+						:action => 'evaluation',
+						:id => offering.id,
+						}, {:style => "color:#ffffff;", method: :put}) %>
+				</center></b>
+				<% end %>
+				</td>
+
+
+		<% ("A".."Q").each do |i|%>
+				<td 
+				<% if offering.AbetMetrics.find_by(abet: i).present? == TRUE%>	
+					bgColor="<%=GetColorFromEvaluation offering.AbetMetrics.find_by(abet: i).rating%>"
+				<%else%>
+					bgColor="5bc0de"
+				<%end%>
+			>
+
+				<% if current_user.permission == "C" %>
+					<% if offering.AbetMetrics.find_by(abet: i).present? == TRUE %>
+						<b><center>
+									<%=	link_to("change", 
+									{:controller => 'abet_metrics',
+									:action => 'evaluation',
+									:id => offering.AbetMetrics.find_by(abet: i).id
+									}, {:style => "color:#ffffff;", method: :put}) %>
+						</center></b>
+						<b><center>
+									<%= link_to("delete",
+									{:controller => 'abet_metrics',
+									:action => 'destroy',
+									:id => offering.AbetMetrics.find_by(abet: i).id
+									}, {:style => "color:#ffffff;", method: :delete}) %>
+						</center></b>
+					<% else %>
+						<b><center>
+									<%= link_to("add",
+									{:controller => 'abet_metrics',
+									:action => 'create',
+									#:id => [offering.id, i]
+									:id => offering.id,
+									:abet => i
+									},{:style => "color:#ffffff;", method: :create}) %>
+						</center></b>
+					<% end %>
+				<% end %>
+
+			</td>
+		<%end%>
+			
+      </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate offerings %>
+
+</div>
+
+~                 
