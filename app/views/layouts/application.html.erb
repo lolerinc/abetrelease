@@ -29,7 +29,7 @@
       <ul class="nav navbar-nav">
         <li class="<%= 'active' if params[:controller] == 'documents' %>"> <%= link_to "Browse", browse_index_url%></li>
         <li class="<%= 'active' if params[:controller] == 'master_matrices' %>"> <%= link_to "Master Matrices", master_matrices_index_url%> </li> 
-        <li class="<%= 'active' if params[:controller] == 'offerings' %>"> <%= link_to "Tracker", offerings_index_url%> </li>
+        <li class="<%= 'active' if params[:controller] == 'offerings' %>"> <%= link_to "Trackers", offerings_index_url%> </li>
 
 				<% if current_user.permission == "A" || current_user.permission == "C" %>
 				<li class="<%= 'active' if params[:controller] == 'sys_admin_index' %>"> <%= link_to "Configure", sys_admin_index_url%> </li>

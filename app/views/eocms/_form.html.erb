@@ -1,6 +1,6 @@
 <%= form_for(@eocm) do |f| %>
   <% if @eocm.errors.any? %>
-    <div id="error_explanations">
+    <div id="error_explanation">
       <h2><%= pluralize(@eocm.errors.count, "error") %> prohibited this eocm from being saved:</h2>
 
       <ul>
